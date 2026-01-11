@@ -1,0 +1,73 @@
+---
+title: MongoDB Common Queries
+date: '2024-02-15'
+tags: [mongodb, database, queries, nosql]
+draft: false
+summary: Common MongoDB query patterns for CRUD operations, filtering, and aggregation
+images: []
+layout: PostSimple
+---
+
+## Basic CRUD Operations
+
+```js showLineNumbers
+// Create
+const user = await User.create({
+  name: 'Mohamed',
+  email: 'mohamed@example.com'
+});
+
+// Read
+const users = await User.find();
+const user = await User.findById(userId);
+const userByEmail = await User.findOne({ email: 'mohamed@example.com' });
+
+// Update
+const updatedUser = await User.findByIdAndUpdate(
+  userId,
+  { name: 'Mohamed Adan' },
+  { new: true, runValidators: true }
+);
+
+// Delete
+await User.findByIdAndDelete(userId);
+```
+
+## Advanced Queries
+
+```js showLineNumbers
+// Find with conditions
+const activeUsers = await User.find({
+  status: 'active',
+  createdAt: { $gte: new Date('2024-01-01') }
+});
+
+// Pagination
+const page = 1;
+const limit = 10;
+const skip = (page - 1) * limit;
+
+const users = await User.find()
+  .skip(skip)
+  .limit(limit)
+  .sort({ createdAt: -1 });
+
+// Populate relationships
+const posts = await Post.find()
+  .populate('author', 'name email')
+  .populate('comments.user', 'name');
+```
+
+## Aggregation Pipeline
+
+```js showLineNumbers
+const stats = await User.aggregate([
+  { $match: { status: 'active' } },
+  { $group: {
+    _id: '$role',
+    count: { $sum: 1 },
+    avgAge: { $avg: '$age' }
+  }},
+  { $sort: { count: -1 } }
+]);
+```

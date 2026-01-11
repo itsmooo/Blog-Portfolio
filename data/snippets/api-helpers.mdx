@@ -1,0 +1,84 @@
+---
+title: API Helper Functions
+date: '2024-03-10'
+tags: [api, javascript, utilities, helpers]
+draft: false
+summary: Reusable helper functions for API requests, response formatting, and error handling
+images: []
+layout: PostSimple
+---
+
+## API Response Formatter
+
+```js showLineNumbers
+const successResponse = (res, data, message = 'Success', statusCode = 200) => {
+  return res.status(statusCode).json({
+    success: true,
+    message,
+    data
+  });
+};
+
+const errorResponse = (res, message = 'Error', statusCode = 400) => {
+  return res.status(statusCode).json({
+    success: false,
+    message
+  });
+};
+```
+
+## Fetch Wrapper with Error Handling
+
+```js showLineNumbers
+const apiCall = async (url, options = {}) => {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      },
+      ...options
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('API call failed:', error);
+    throw error;
+  }
+};
+```
+
+## Async Fetch Hook (React)
+
+```js showLineNumbers
+import { useState, useEffect } from 'react';
+
+function useApi(url, options = {}) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(url, options);
+        const json = await response.json();
+        setData(json);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [url]);
+
+  return { data, loading, error, refetch: () => fetchData() };
+}
+```
