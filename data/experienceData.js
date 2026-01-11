@@ -1,29 +1,29 @@
 const experienceData = [
   {
-    title: 'Data Engineering Intern',
-    company: 'Accenture',
-    location: 'Ahmedabad, India',
-    range: 'January 2022 - May 2022',
-    url: 'https://www.accenture.com/gr-en/about/consulting-index',
+    title: 'Machine Learning & Deep Learning Intern',
+    company: 'IndapaX',
+    location: 'Somalia',
+    range: '2023',
+    url: 'https://deeplearningindaba.com/',
     text1:
-      'Helped with the digital transformation of BOAT by working on their platform called ByteETL.',
+      'Participated in a hands-on internship focused on Machine Learning and Deep Learning, gaining practical experience in AI model development and data processing.',
     text2:
-      'Built the encryption component for the platform using Scala and Spark which included 2 encoding functionalities : ENCRYPT and HASH.',
+      'Built a speech-to-text system capable of translating spoken Somali language into clean, structured Somali text using deep learning techniques.',
     text3:
-      'Created JSON wrappers for the encryption components and automated and triggered the pipelines to run at specific intervals using CronJob.',
+      'Worked on audio preprocessing, model training, and evaluation to improve transcription accuracy and overall system performance.',
   },
   {
-    title: 'Software Engineer Analytics',
-    company: 'HOPS Healthcare',
-    location: 'Ahmedabad, India',
-    range: 'March 2021 - June 2021',
-    url: 'https://hops.healthcare/',
+    title: 'Software Engineer',
+    company: 'Bravo Group',
+    location: 'Mogadishu, Somalia',
+    range: 'January 2024 - jun 2024',
+    url: 'https://www.bravo.so/en/home',
     text1:
-      'Guided by Mr. Vivek Patel, to create a pipeline that extracts essential information from informal conversations.',
+      'Contributed to the development of scalable web applications for Bravo Group, supporting the company’s digital transformation initiatives.',
     text2:
-      'Worked on creating a web app for their healthcare system for doctors to analyze and save reports.',
+      'Designed and implemented responsive frontend interfaces and robust backend services to deliver secure and high-performance applications.',
     text3:
-      'Developed functions for automatically extracting important elements from reports using BioBERT and Regex.',
+      'Collaborated with cross-functional teams to integrate APIs, optimize application performance, and ensure maintainable, production-ready solutions.',
   },
 ]
 

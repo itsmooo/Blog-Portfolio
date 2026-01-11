@@ -139,7 +139,7 @@ export default function AuthorLayout({ children, frontMatter }) {
               projects with new people. Feel free to reach out if you have anything to talk about,
               you can reach me through{' '}
               <Link
-                href={'mailto:desaiparth2000@gmail.com'}
+                href={'mailto:maxamedadan169@gmail.com'}
                 className="special-underline no-underline hover:text-gray-100 dark:text-gray-100 hover:dark:text-gray-100"
               >
                 Mail
@@ -159,7 +159,7 @@ export default function AuthorLayout({ children, frontMatter }) {
               </Link>{' '}
               or{' '}
               <Link
-                href={'https://api.whatsapp.com/send?phone=916358190818&text=hi'}
+                href={'https://api.whatsapp.com/send?phone=252617237489&text=hi'}
                 className="special-underline no-underline hover:text-gray-100 dark:text-gray-100 hover:dark:text-gray-100"
               >
                 Whatsapp
