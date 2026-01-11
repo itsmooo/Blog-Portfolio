@@ -1,13 +1,14 @@
 const projectsData = [
   {
-    title: 'InstantMD',
-    description: `Instant MD is an Investigation, Medication and Chief complaint recognition application using Natural Language Processing. 🏆 Winner of the HealthCare Track at the MINeD Hackathon.`,
+    title: 'Medical Chatbot',
+    description:
+      'An intelligent healthcare assistant that uses NLP to analyze symptoms and provide basic medical guidance through a conversational interface. Built with Flask, Regex-based NLP processing, and Semantic UI.',
     imgSrc: '',
     href: '',
-    github: 'https://github.com/pycoder2000/InstantMD',
-    tech1: 'Regex',
+    github: 'https://github.com/itsmooo/medical-chatbot',
+    tech1: 'python',
     tech2: 'Flask',
-    tech3: 'Semantic UI',
+    tech3: 'Nextjs',
   },
   {
     title: 'Car Price Predictor',
