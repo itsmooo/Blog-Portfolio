@@ -1,0 +1,177 @@
+---
+title: 'JWT Authentication: Best Practices and Common Pitfalls'
+date: '2024-03-20'
+tags: [authentication, jwt, security, backend, api]
+draft: false
+summary: Learn best practices for implementing JWT authentication securely and avoid common security pitfalls in your applications.
+---
+
+JSON Web Tokens (JWT) have become the standard for authentication in modern web applications. However, implementing JWT authentication securely requires understanding best practices and common pitfalls. Let me share what I've learned building secure authentication systems.
+
+## Understanding JWTs
+
+A JWT consists of three parts:
+- **Header**: Algorithm and token type
+- **Payload**: Claims (user data)
+- **Signature**: Verification signature
+
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEyMywiaWF0IjoxNjE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+```
+
+## Best Practices
+
+### 1. Store Tokens Securely
+
+**Never store JWTs in localStorage** for web applications vulnerable to XSS attacks. Use httpOnly cookies instead:
+
+```javascript
+// Server-side: Setting httpOnly cookie
+res.cookie('token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'strict',
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+});
+```
+
+### 2. Use Short Expiration Times
+
+Keep access tokens short-lived (15 minutes to 1 hour) and use refresh tokens for longer sessions:
+
+```javascript
+// Access token: 15 minutes
+const accessToken = jwt.sign(
+  { userId: user.id },
+  process.env.JWT_SECRET,
+  { expiresIn: '15m' }
+);
+
+// Refresh token: 7 days
+const refreshToken = jwt.sign(
+  { userId: user.id },
+  process.env.JWT_REFRESH_SECRET,
+  { expiresIn: '7d' }
+);
+```
+
+### 3. Implement Refresh Token Rotation
+
+Rotate refresh tokens on each use to prevent token reuse attacks:
+
+```javascript
+async function refreshAccessToken(oldRefreshToken) {
+  const decoded = jwt.verify(oldRefreshToken, process.env.JWT_REFRESH_SECRET);
+  
+  // Invalidate old refresh token
+  await invalidateRefreshToken(oldRefreshToken);
+  
+  // Generate new tokens
+  const newAccessToken = generateAccessToken(decoded.userId);
+  const newRefreshToken = generateRefreshToken(decoded.userId);
+  
+  return { newAccessToken, newRefreshToken };
+}
+```
+
+### 4. Validate Tokens Properly
+
+Always verify tokens on the server side:
+
+```javascript
+const verifyToken = (req, res, next) => {
+  const token = req.cookies.token;
+  
+  if (!token) {
+    return res.status(401).json({ error: 'No token provided' });
+  }
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(403).json({ error: 'Invalid token' });
+  }
+};
+```
+
+### 5. Don't Store Sensitive Data
+
+JWTs are base64 encoded, not encrypted. Never store sensitive information:
+
+```javascript
+// ❌ Bad
+const token = jwt.sign({
+  userId: user.id,
+  password: user.password, // Never!
+  creditCard: user.creditCard // Never!
+}, secret);
+
+// ✅ Good
+const token = jwt.sign({
+  userId: user.id,
+  email: user.email
+}, secret);
+```
+
+## Common Pitfalls
+
+### 1. Using Weak Secrets
+
+Always use strong, random secrets:
+
+```javascript
+// Generate a strong secret
+require('crypto').randomBytes(64).toString('hex');
+```
+
+### 2. Not Handling Token Expiration
+
+Implement proper error handling for expired tokens:
+
+```javascript
+try {
+  const decoded = jwt.verify(token, secret);
+} catch (error) {
+  if (error.name === 'TokenExpiredError') {
+    // Handle expired token (refresh or re-login)
+  } else if (error.name === 'JsonWebTokenError') {
+    // Handle invalid token
+  }
+}
+```
+
+### 3. Overlooking Token Revocation
+
+Implement a token blacklist or use short expiration times:
+
+```javascript
+// Blacklist approach
+const blacklistedTokens = new Set();
+
+function isTokenBlacklisted(token) {
+  return blacklistedTokens.has(token);
+}
+
+function revokeToken(token) {
+  blacklistedTokens.add(token);
+}
+```
+
+## Security Checklist
+
+- ✅ Use httpOnly cookies for token storage
+- ✅ Implement refresh token rotation
+- ✅ Use strong, random secrets
+- ✅ Set appropriate expiration times
+- ✅ Never store sensitive data in tokens
+- ✅ Validate tokens server-side
+- ✅ Use HTTPS in production
+- ✅ Implement CSRF protection
+- ✅ Handle token expiration gracefully
+- ✅ Consider token revocation for sensitive apps
+
+## Conclusion
+
+JWT authentication is powerful but requires careful implementation. By following these best practices, you'll create a secure authentication system that protects your users and your application.
