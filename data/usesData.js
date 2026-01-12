@@ -1,15 +1,5 @@
 const usesData = [
   {
-    title: 'Macbook Pro 13"',
-    description: `M1 - 8 core CPU, 8 core GPU, 16 GB RAM`,
-    href: 'https://www.amazon.in/Apple-MacBook-Chip-13-inch-256GB/dp/B08N5VSQNG',
-  },
-  {
-    title: 'Alfred',
-    description: `Productivity on Mac`,
-    href: 'https://www.alfredapp.com/',
-  },
-  {
     title: 'Superhuman',
     description: `Email client with keybindings`,
     href: 'https://superhuman.com',
@@ -24,11 +14,11 @@ const usesData = [
     description: `Trying out the beta version of this shell, looks promising`,
     href: 'https://www.warp.dev/',
   },
-  {
-    title: 'iTerm2',
-    description: `This one works well, like the customisability`,
-    href: 'https://ohmyz.sh/',
-  },
+  // {
+  //   title: 'iTerm2',
+  //   description: `This one works well, like the customisability`,
+  //   href: 'https://ohmyz.sh/',
+  // },
   {
     title: 'zsh',
     description: `Recently started using this shell, like the customisability`,
