@@ -12,11 +12,7 @@ const Contact = () => {
         </h1>
         <div className="pt-10 pb-8">
           <ul className="font-semi-bold flex flex-col space-y-4">
-            <ContactLink
-              href="https://github.com/itsmooo"
-              title="github"
-              icon="itsmooo"
-            />
+            <ContactLink href="https://github.com/itsmooo" title="github" icon="itsmooo" />
           </ul>
         </div>
       </div>

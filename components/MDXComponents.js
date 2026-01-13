@@ -6,6 +6,21 @@ import CustomLink from './Link'
 import TOCInline from './TOCInline'
 import Pre from './Pre'
 import { BlogNewsletterForm } from './NewsletterForm'
+import PostLayout from '@/layouts/PostLayout'
+import PostSimple from '@/layouts/PostSimple'
+import AuthorLayout from '@/layouts/AuthorLayout'
+import ListLayout from '@/layouts/ListLayout'
+import SnippetsLayout from '@/layouts/SnippetsLayout'
+import ActivityLayout from '@/layouts/ActivityLayout'
+
+const layouts = {
+  PostLayout,
+  PostSimple,
+  AuthorLayout,
+  ListLayout,
+  SnippetsLayout,
+  ActivityLayout,
+}
 
 export const MDXComponents = {
   Image,
@@ -14,7 +29,11 @@ export const MDXComponents = {
   pre: Pre,
   BlogNewsletterForm: BlogNewsletterForm,
   wrapper: ({ components, layout, ...rest }) => {
-    const Layout = require(`../layouts/${layout}`).default
+    const Layout = layouts[layout] || PostLayout
+    if (!Layout) {
+      console.error(`Layout "${layout}" not found. Using PostLayout as fallback.`)
+      return <PostLayout {...rest} />
+    }
     return <Layout {...rest} />
   },
 }

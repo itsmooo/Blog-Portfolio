@@ -1,12 +1,7 @@
 import { FaGraduationCap, FaBlackTie } from 'react-icons/fa'
 import { AiOutlineCode } from 'react-icons/ai'
 
-
-
-
 import { BsBuilding } from 'react-icons/bs'
-
-
 
 export default function Timeline() {
   return (
@@ -53,9 +48,7 @@ export default function Timeline() {
           <time className="text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
             2024
           </time>
-          <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-            Bravo Group
-          </p>
+          <p className="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">Bravo Group</p>
         </li>
         <li className="mb-4 ml-8 rounded-md border border-gray-100 bg-white px-4 py-4 shadow-sm shadow-gray-300 dark:border-zinc-900 dark:bg-zinc-900 dark:shadow-none">
           <span className="absolute -left-3 flex h-6 w-6 items-center justify-center rounded-full bg-blue-200 ring-8 ring-white dark:bg-blue-900 dark:ring-gray-900">

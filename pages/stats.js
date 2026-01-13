@@ -1,6 +1,5 @@
 // import Link from '@/components/Link'
 import Analytics from 'components/metrics/Analytics'
-import Twitter from '@/components/metrics/Twitter'
 import GithubPersonal from '@/components/metrics/GithubPersonal'
 import GitHub from '@/components/metrics/Github'
 import siteMetadata from '@/data/siteMetadata'
@@ -13,7 +12,7 @@ export default function Stats() {
     <>
       <PageSEO
         title={`Stats - ${siteMetadata.author}`}
-        description="Statistics about my blog, Github, Twitter and more"
+        description="Statistics about my blog, Github and more"
       />
       <div className="mx-auto max-w-2xl overflow-hidden">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5 ">
@@ -21,8 +20,8 @@ export default function Stats() {
             Stats
           </h1>
           <p className="text-md leading-7 text-gray-500 dark:text-gray-400">
-            I use this dashboard to track various metrics across platforms like Spotify, Twitter,
-            GitHub, and more.
+            I use this dashboard to track various metrics across platforms like Spotify, GitHub, and
+            more.
           </p>
         </div>
         <div className="pt-2">
@@ -30,12 +29,7 @@ export default function Stats() {
             <GithubPersonal />
             <GitHub />
           </div>
-          <div className="grid w-full grid-cols-1 gap-4 py-2  sm:grid-cols-2">
-            <Twitter type="followers" />
-            <Twitter type="following" />
-          </div>
           <div className="grid w-full grid-cols-1 gap-4 py-2 sm:grid-cols-2">
-            <Twitter type="total_tweets" />
             <Analytics />
           </div>
         </div>
