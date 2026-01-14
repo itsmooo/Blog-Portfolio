@@ -17,6 +17,9 @@
     "prepare": "husky install"
   },
   "license": "MIT",
+  "engines": {
+    "node": "24.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itsmooo/blog.git"
