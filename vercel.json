@@ -2,10 +2,5 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install",
-  "functions": {
-    "api/**.js": {
-      "runtime": "nodejs22.x"
-    }
-  }
+  "installCommand": "pnpm install"
 }
