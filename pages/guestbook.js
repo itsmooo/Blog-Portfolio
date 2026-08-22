@@ -1,4 +1,3 @@
-import prisma from 'lib/prisma'
 import Guestbook from '@/components/Guestbook'
 import siteMetadata from '@/data/siteMetadata'
 import { PageSEO } from '@/components/SEO'
@@ -34,22 +33,9 @@ export default function GuestbookPage({ fallbackData }) {
   )
 }
 export async function getStaticProps() {
-  const entries = await prisma.guestbook.findMany({
-    orderBy: {
-      updated_at: 'desc',
-    },
-  })
-
-  const fallbackData = entries.map((entry) => ({
-    id: entry.id.toString(),
-    body: entry.body,
-    created_by: entry.created_by.toString(),
-    updated_at: entry.updated_at.toString(),
-  }))
-
   return {
     props: {
-      fallbackData,
+      fallbackData: [],
     },
     revalidate: 60,
   }
