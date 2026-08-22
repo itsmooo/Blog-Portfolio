@@ -90,8 +90,7 @@ export default function Now(currentlyReading) {
         <div>
           <div className="flex justify-between gap-5">
             <div className="mb-10 mt-2 w-1/2 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
-              <span className="ml-2 font-semibold">Location:</span>{' '}
-              <span>Mogadishu, Somalia</span>
+              <span className="ml-2 font-semibold">Location:</span> <span>Mogadishu, Somalia</span>
               <br />
               <span className="ml-2 font-semibold">Weather:</span>{' '}
               <span>
@@ -179,9 +178,9 @@ export default function Now(currentlyReading) {
           </p>
           <br />
           <p>
-            I build web and mobile applications, AI-powered features, and machine learning
-            solutions — working across the full stack to deliver secure, scalable products for
-            clients in Somalia and beyond.
+            I build web and mobile applications, AI-powered features, and machine learning solutions
+            — working across the full stack to deliver secure, scalable products for clients in
+            Somalia and beyond.
           </p>
           <br />
           <p>
