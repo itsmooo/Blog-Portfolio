@@ -1,0 +1,148 @@
+---
+title: 'Context Engineering: The Skill That Makes AI Agents Actually Work'
+date: '2026-06-20'
+tags: [ai, context-engineering, agents, prompt-engineering, software-engineering]
+draft: false
+summary: Prompt engineering got you started. Context engineering is what separates agents that ship from agents that hallucinate — structuring the information, constraints, and history models need to do real work.
+---
+
+Everyone learned prompt engineering in 2024. Write a clear instruction, add examples, iterate. That works for one-shot tasks.
+
+It breaks down when you ask an agent to work across a real codebase for hours. The bottleneck is no longer the model — it is **context**: what information the agent sees, in what order, and with what constraints.
+
+Context engineering is the discipline of designing that information environment.
+
+## Prompt Engineering vs. Context Engineering
+
+| Prompt Engineering | Context Engineering |
+| --- | --- |
+| One instruction | A structured information system |
+| "Write a function that..." | Spec + codebase rules + relevant files + prior decisions |
+| Optimizes a single turn | Optimizes multi-step, long-running work |
+| Fits in a chat window | Manages token budgets across an entire session |
+
+A great prompt with bad context produces confident wrong answers. A mediocre prompt with excellent context produces reliable output.
+
+## The Context Stack
+
+Think of context as layers, ordered by priority:
+
+```
+┌─────────────────────────────┐
+│  Goal & acceptance criteria │  ← What done looks like
+├─────────────────────────────┤
+│  Constraints & policies     │  ← What the agent must not do
+├─────────────────────────────┤
+│  Relevant code & docs       │  ← Only what matters for this task
+├─────────────────────────────┤
+│  Project conventions        │  ← Style, patterns, architecture
+├─────────────────────────────┤
+│  Prior decisions & history  │  ← Why things are the way they are
+└─────────────────────────────┘
+```
+
+### 1. Goal and Acceptance Criteria
+
+Vague goals produce vague code. Be specific:
+
+```markdown
+## Goal
+Add rate limiting to the /api/v1/search endpoint.
+
+## Done when
+- [ ] Returns 429 after 100 requests/minute per IP
+- [ ] Uses Redis for counter storage
+- [ ] Includes unit tests for limit boundary
+- [ ] Existing tests still pass
+- [ ] No changes outside src/api/ and tests/
+```
+
+### 2. Constraints and Policies
+
+Tell the agent what it cannot do before it does it:
+
+```markdown
+## Constraints
+- Do not modify database schemas
+- Do not add new npm dependencies without listing them first
+- Do not change authentication middleware
+- Run `npm test` after every file change
+```
+
+### 3. Relevant Code Only
+
+Dumping the entire repo into context wastes tokens and confuses the model. Curate:
+
+- The files being modified
+- Interfaces and types the changes depend on
+- One example of the pattern to follow
+
+```javascript
+// Bad: "@codebase implement feature X"
+// Good: provide these 4 files + the interface contract
+```
+
+### 4. Project Conventions
+
+Maintain a `AGENTS.md` or `.cursor/rules` file in your repo:
+
+```markdown
+# Project Conventions
+
+- Use functional components with hooks (no class components)
+- API routes live in pages/api/ following Next.js conventions
+- All database queries go through the repository layer in lib/db/
+- Error responses use { error: string, code: number } shape
+- Tests use vitest, co-located as *.test.ts next to source
+```
+
+Agents read this once and apply it consistently — better than repeating rules in every prompt.
+
+### 5. Decision Log
+
+When an agent asks "should I use approach A or B?" and you decide, **write it down**:
+
+```markdown
+## Decision Log
+- 2026-06-15: Chose Redis over in-memory for rate limiting (multi-instance deploy)
+- 2026-06-15: Sliding window algorithm over fixed window (fairer for bursty traffic)
+```
+
+Future agent sessions inherit these decisions instead of re-debating them.
+
+## Context Budget Management
+
+Models have finite context windows. Strategies for long tasks:
+
+**Summarize and checkpoint.** After each subtask, write a brief status file outside the conversation:
+
+```json
+{
+  "task": "rate-limiting",
+  "completed": ["Redis client setup", "middleware skeleton"],
+  "remaining": ["unit tests", "integration test"],
+  "files_changed": ["src/middleware/rateLimit.ts", "lib/redis.ts"]
+}
+```
+
+**Retrieve, don't dump.** Use search and file listing to pull in code on demand rather than front-loading everything.
+
+**Prune aggressively.** Remove resolved discussions, outdated diffs, and failed attempts from active context.
+
+## Measuring Context Quality
+
+You know context engineering is working when:
+
+- Agents need fewer clarification questions
+- First-attempt success rate on tasks goes up
+- Review feedback is about design choices, not basic convention violations
+- The same task produces consistent results across sessions
+
+## Start Today
+
+1. Create an `AGENTS.md` in your repo with conventions and constraints
+2. Write acceptance criteria as checklists, not paragraphs
+3. Keep a decision log for architectural choices
+4. Curate context per task — less is more
+
+Prompt engineering taught us to talk to AI. Context engineering teaches us to **set up the room** before the conversation starts.

@@ -25,6 +25,19 @@ const experienceData = [
     text3:
       'Collaborated with cross-functional teams to integrate APIs, optimize application performance, and ensure maintainable, production-ready solutions.',
   },
+  {
+    title: 'Software Engineer',
+    company: 'JTech (Jamhuriya Technology Solutions)',
+    location: 'Mogadishu, Somalia',
+    range: '2024 - Present',
+    url: 'https://jtech.so/',
+    text1:
+      'Develop and maintain web applications and custom software solutions for clients across education, healthcare, and business sectors.',
+    text2:
+      'Build responsive frontend interfaces and scalable backend services using modern JavaScript frameworks and RESTful APIs.',
+    text3:
+      'Collaborate with designers and product teams to deliver secure, high-performance applications that meet client requirements.',
+  },
 ]
 
 export default experienceData

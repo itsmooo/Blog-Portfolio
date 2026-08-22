@@ -48,6 +48,9 @@ const siteMetadata = {
   socialAccount: {
     twitter: '',
   },
+  lyket: {
+    publicKey: process.env.NEXT_PUBLIC_LYKET_PUBLIC_KEY || '',
+  },
 }
 
 module.exports = siteMetadata

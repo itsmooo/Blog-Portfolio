@@ -11,76 +11,76 @@ layout: PostSimple
 ## useFetch Hook
 
 ```js showLineNumbers
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function useFetch(url) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
-        setLoading(false);
+        setData(data)
+        setLoading(false)
       })
       .catch((err) => {
-        setError(err);
-        setLoading(false);
-      });
-  }, [url]);
+        setError(err)
+        setLoading(false)
+      })
+  }, [url])
 
-  return { data, loading, error };
+  return { data, loading, error }
 }
 ```
 
 ## useDebounce Hook
 
 ```js showLineNumbers
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function useDebounce(value, delay) {
-  const [debouncedValue, setDebouncedValue] = useState(value);
+  const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
-    }, delay);
+      setDebouncedValue(value)
+    }, delay)
 
     return () => {
-      clearTimeout(handler);
-    };
-  }, [value, delay]);
+      clearTimeout(handler)
+    }
+  }, [value, delay])
 
-  return debouncedValue;
+  return debouncedValue
 }
 ```
 
 ## useLocalStorage Hook
 
 ```js showLineNumbers
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : initialValue;
+      const item = window.localStorage.getItem(key)
+      return item ? JSON.parse(item) : initialValue
     } catch (error) {
-      return initialValue;
+      return initialValue
     }
-  });
+  })
 
   const setValue = (value) => {
     try {
-      setStoredValue(value);
-      window.localStorage.setItem(key, JSON.stringify(value));
+      setStoredValue(value)
+      window.localStorage.setItem(key, JSON.stringify(value))
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-  };
+  }
 
-  return [storedValue, setValue];
+  return [storedValue, setValue]
 }
 ```

@@ -1,0 +1,224 @@
+---
+title: 'Building AI Agents with Node.js: A Practical Guide'
+date: '2026-05-12'
+tags: [ai, agents, nodejs, llm, typescript, software-engineering]
+draft: false
+summary: A hands-on walkthrough of building a tool-using AI agent in Node.js — from LLM integration and function calling to multi-step reasoning loops.
+---
+
+AI agents are not magic — they are programs that call an LLM, parse its response, execute tools, and loop until the task is done. Node.js is a natural fit: async I/O, a rich npm ecosystem, and the same language many teams already use for APIs and frontends.
+
+This guide walks through building a minimal but real agent from scratch.
+
+## Architecture Overview
+
+```
+User Request
+     │
+     ▼
+┌─────────────┐
+│ Agent Loop  │◄──────────────┐
+└──────┬──────┘               │
+       │                      │
+       ▼                      │
+┌─────────────┐    results    │
+│ LLM API     │───────────────┘
+└──────┬──────┘
+       │ tool calls
+       ▼
+┌─────────────┐
+│ Tool Layer  │  (file read, shell, search, API calls)
+└─────────────┘
+```
+
+## Project Setup
+
+```bash
+mkdir my-agent && cd my-agent
+npm init -y
+npm install openai zod dotenv
+```
+
+```javascript
+// agent.js
+import OpenAI from 'openai'
+import { z } from 'zod'
+import 'dotenv/config'
+
+const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+```
+
+## Defining Tools
+
+Tools are functions the agent can invoke. Define them with clear schemas so the model knows when and how to use them:
+
+```javascript
+const tools = [
+  {
+    type: 'function',
+    function: {
+      name: 'read_file',
+      description: 'Read the contents of a file at the given path',
+      parameters: {
+        type: 'object',
+        properties: {
+          path: { type: 'string', description: 'Absolute or relative file path' },
+        },
+        required: ['path'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'run_command',
+      description: 'Run a shell command and return stdout/stderr',
+      parameters: {
+        type: 'object',
+        properties: {
+          command: { type: 'string', description: 'Shell command to execute' },
+        },
+        required: ['command'],
+      },
+    },
+  },
+]
+```
+
+Implement the tool handlers:
+
+```javascript
+import fs from 'fs/promises'
+import { execSync } from 'child_process'
+
+const ALLOWED_COMMANDS = ['npm test', 'npm run lint', 'git status', 'git diff']
+
+async function executeTool(name, args) {
+  switch (name) {
+    case 'read_file':
+      return await fs.readFile(args.path, 'utf-8')
+
+    case 'run_command': {
+      const allowed = ALLOWED_COMMANDS.some((cmd) => args.command.startsWith(cmd))
+      if (!allowed) return `Error: command not allowed: ${args.command}`
+      try {
+        return execSync(args.command, { encoding: 'utf-8', timeout: 30_000 })
+      } catch (err) {
+        return `Command failed:\n${err.stdout}\n${err.stderr}`
+      }
+    }
+
+    default:
+      return `Unknown tool: ${name}`
+  }
+}
+```
+
+## The Agent Loop
+
+The core pattern: send messages to the LLM, if it requests a tool call execute it, feed the result back, repeat:
+
+```javascript
+async function runAgent(userMessage, maxSteps = 10) {
+  const messages = [
+    {
+      role: 'system',
+      content: `You are a software engineering agent. You have tools to read files and run commands.
+Always verify your work by running tests. Be concise in your final answer.`,
+    },
+    { role: 'user', content: userMessage },
+  ]
+
+  for (let step = 0; step < maxSteps; step++) {
+    const response = await client.chat.completions.create({
+      model: 'gpt-4o',
+      messages,
+      tools,
+    })
+
+    const choice = response.choices[0]
+    messages.push(choice.message)
+
+    if (choice.finish_reason === 'stop') {
+      return choice.message.content
+    }
+
+    if (choice.message.tool_calls) {
+      for (const toolCall of choice.message.tool_calls) {
+        const args = JSON.parse(toolCall.function.arguments)
+        const result = await executeTool(toolCall.function.name, args)
+
+        messages.push({
+          role: 'tool',
+          tool_call_id: toolCall.id,
+          content: String(result).slice(0, 8000),
+        })
+      }
+    }
+  }
+
+  return 'Agent reached maximum steps without completing.'
+}
+```
+
+## Running It
+
+```javascript
+const result = await runAgent(
+  'Read package.json and tell me what test framework this project uses. Then run the tests.'
+)
+console.log(result)
+```
+
+## Making It Production-Ready
+
+The minimal loop above is a starting point. For real use, add:
+
+**Structured logging** — Log every tool call, argument, and result for debugging and audit.
+
+**Token budgeting** — Truncate tool outputs and summarize old messages when context grows.
+
+**Parallel tool calls** — When the model requests multiple independent tools, run them concurrently.
+
+**Human approval gates** — Block destructive operations (file writes, deploys) until a human confirms.
+
+**Retry with backoff** — LLM APIs fail; wrap calls with exponential backoff.
+
+```javascript
+async function withRetry(fn, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn()
+    } catch (err) {
+      if (i === maxRetries - 1) throw err
+      await new Promise((r) => setTimeout(r, 2 ** i * 1000))
+    }
+  }
+}
+```
+
+## Multi-Agent Composition
+
+Once a single agent works, compose specialized agents:
+
+```javascript
+const agents = {
+  planner: { model: 'gpt-4o', tools: ['read_file', 'search_codebase'] },
+  builder: { model: 'gpt-4o', tools: ['read_file', 'write_file', 'run_command'] },
+  reviewer: { model: 'gpt-4o', tools: ['read_file', 'run_command'] },
+}
+
+// Orchestrator delegates: planner → builder → reviewer
+```
+
+Each agent gets only the tools and context it needs — narrower scope means fewer mistakes.
+
+## Key Takeaways
+
+- Agents are loops, not one-shot prompts
+- Tool design matters more than model choice
+- Always constrain what agents can do (allowed paths, allowed commands)
+- External verification (tests, linters) is how you know the agent succeeded
+- Start with one agent and one task; compose later
+
+Building agents in Node.js is straightforward. The hard part — and the valuable part — is designing the **policies, verification, and context** around the loop.

@@ -14,7 +14,7 @@ import { ClientReload } from '@/components/ClientReload'
 import ProgressBar from 'react-scroll-progress-bar'
 import ScrollTop from '@/components/ScrollTop'
 import { SessionProvider } from 'next-auth/react'
-import { Provider } from '@lyket/react'
+import LyketWrapper from '@/components/LyketWrapper'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isSocket = process.env.SOCKET
@@ -36,24 +36,10 @@ Router.onRouteChangeError = () => {
   NProgress.done()
 }
 
-const defaultTheme = {
-  colors: {
-    primary: '#71717a',
-    secondary: '#ff00c3',
-    text: '#fff',
-    highlight: '#ff00c3',
-    icon: '#fff',
-    background: 'transparent',
-  },
-  fonts: {
-    body: 'inherit',
-  },
-}
-
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <SessionProvider session={session}>
-      <Provider apiKey="pt_7c8b6840f5ba39cd3b2b471cd8efc2" theme={defaultTheme}>
+      <LyketWrapper>
         <ThemeProvider attribute="class" defaultTheme={siteMetadata.theme}>
           <ProgressBar bgcolor="#DE1D8D" />
           <ScrollTop />
@@ -66,7 +52,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
             <Component {...pageProps} />
           </LayoutWrapper>
         </ThemeProvider>
-      </Provider>
+      </LyketWrapper>
     </SessionProvider>
   )
 }

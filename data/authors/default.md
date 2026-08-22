@@ -2,10 +2,10 @@
 name: Mohamed Adan
 avatar: /static/images/avatar.png
 occupation: Full-Stack Developer
-company: 
-email: 
-twitter: 
-linkedin: 
+company:
+email:
+twitter:
+linkedin:
 github: https://github.com/itsmooo
 text1: I am Mohamed, a Full-Stack Developer with experience building modern, scalable, and user-focused web applications. I work across both frontend and backend technologies, transforming ideas into reliable digital products. I focus on clean code, performance, security, and maintainable system design.
 text2:
@@ -56,12 +56,15 @@ I am Mohamed, a Full-Stack Developer with experience building modern, scalable, 
 ## Projects (Example)
 
 ### Health Prediction Web Application
+
 Full-stack system using React and Flask to predict diseases based on symptoms.
 
 ### E-Commerce & Business Platforms
+
 Integrated frontend websites with backend services and payment systems.
 
 ### Data-Driven Dashboards
+
 Real-time data visualization and analytics dashboards.
 
 ## Professional Values

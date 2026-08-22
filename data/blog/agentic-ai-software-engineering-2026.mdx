@@ -1,0 +1,118 @@
+---
+title: 'Agentic AI and the Future of Software Engineering in 2026'
+date: '2026-07-15'
+tags: [ai, agentic, software-engineering, sdlc, automation]
+draft: false
+summary: Software development is shifting from writing code to orchestrating autonomous agents across the entire SDLC — from planning and design to build, test, and delivery.
+---
+
+In 2024, AI helped you write a function. In 2026, AI agents plan features, implement them across dozens of files, run tests, open pull requests, and coordinate with other agents — while you focus on architecture, product direction, and the decisions that actually require human judgment.
+
+This is **agentic software engineering**, and it is reshaping how teams ship software.
+
+## From Code Assistants to Agent Swarms
+
+The evolution happened in three phases:
+
+**Phase 1 (2023–2024):** Autocomplete and chat. One line or block at a time, embedded in the IDE.
+
+**Phase 2 (2025):** Expanded scope. Documentation, test generation, design assistance — still mostly single-turn interactions.
+
+**Phase 3 (2026):** End-to-end agents. Multi-step tasks across the full software development lifecycle, orchestrated together.
+
+The industry now talks about **AO-DLC** — Agent-Orchestrated Development Life Cycle — where an orchestrator agent decomposes objectives and assigns work to specialized sub-agents:
+
+```
+Human Engineer
+      │
+      ▼
+Orchestrator Agent
+      │
+      ├── Planner Agent      → requirements, task breakdown
+      ├── Builder Agent      → implementation
+      ├── Tester Agent       → test generation & execution
+      ├── Reviewer Agent     → code review & security
+      └── Deployer Agent     → CI/CD, release notes
+```
+
+## Why Point Tools Plateau
+
+Teams that only use AI for coding often see 30–40% improvement in that step — but overall team velocity increases by less than 10%. The bottleneck moves from implementation to planning, testing, and release.
+
+Agentic development changes the math. When agents handle work consistently across every SDLC stage, gains compound instead of canceling each other out.
+
+## Core Patterns for Agentic Systems
+
+### 1. Planner–Executor Separation
+
+Never let the same agent both plan and execute without review. The planner produces a task list with acceptance criteria. The executor works one task at a time. A reviewer validates before moving on.
+
+### 2. Bounded Autonomy
+
+Agents need clear boundaries:
+
+- Which directories they can modify
+- Which commands they can run
+- When they must stop and ask a human
+- Maximum files changed per iteration
+
+```javascript
+const agentPolicy = {
+  allowedPaths: ['src/', 'tests/'],
+  blockedPaths: ['.env', 'infra/production/'],
+  maxFilesPerRun: 20,
+  requireHumanApproval: ['database migrations', 'auth changes'],
+  allowedCommands: ['npm test', 'npm run lint', 'git diff'],
+}
+```
+
+### 3. Shared Memory and Handoffs
+
+Agents pass structured artifacts between stages — not raw chat history:
+
+- Spec documents
+- Task lists with status
+- Test results as JSON
+- Diff summaries
+
+This keeps context focused and auditable.
+
+### 4. Governance by Design
+
+Agents can propagate errors fast. Production-grade agentic development includes:
+
+- Automated guardrails (lint, type check, security scan on every change)
+- Human-in-the-loop for architectural decisions
+- LLMOps monitoring for quality drift over time
+- Audit logs of every agent action
+
+## What Changes for Developers
+
+The role is elevating, not disappearing:
+
+**Less time on:**
+- Boilerplate implementation
+- Repetitive refactors
+- Writing tests for straightforward logic
+- Manual dependency updates
+
+**More time on:**
+- System design and trade-offs
+- Defining agent policies and verification
+- Product and user experience decisions
+- Mentoring agents through better specs and context
+
+Think of yourself as a **tech lead for a team of agents** — setting direction, reviewing output, and stepping in where judgment matters.
+
+## Practical First Steps
+
+1. **Pilot across SDLC stages**, not just coding. Try an agent for test generation, PR descriptions, or incident triage.
+2. **Define collaboration rules** — when agents act alone vs. when they escalate.
+3. **Invest in testing early** — agents need oracles to know when they are done.
+4. **Choose platforms over point tools** — orchestration beats isolated assistants.
+
+## The Bottom Line
+
+Agentic AI is not about replacing engineers. It is about redesigning the development lifecycle so humans apply judgment where it adds genuine value, and agents handle execution everywhere else.
+
+The teams winning in 2026 are not the ones with the smartest model — they are the ones with the best **orchestration, verification, and governance**.

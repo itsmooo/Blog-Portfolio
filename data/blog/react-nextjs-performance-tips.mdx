@@ -13,16 +13,16 @@ Performance is crucial for modern web applications. Users expect fast, responsiv
 React.lazy allows you to load components only when they're needed, reducing your initial bundle size:
 
 ```javascript
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react'
 
-const LazyComponent = lazy(() => import('./LazyComponent'));
+const LazyComponent = lazy(() => import('./LazyComponent'))
 
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <LazyComponent />
     </Suspense>
-  );
+  )
 }
 ```
 
@@ -31,7 +31,7 @@ function App() {
 Next.js Image component automatically optimizes images:
 
 ```javascript
-import Image from 'next/image';
+import Image from 'next/image'
 
 function MyComponent() {
   return (
@@ -43,11 +43,12 @@ function MyComponent() {
       placeholder="blur"
       priority={false}
     />
-  );
+  )
 }
 ```
 
 Benefits:
+
 - Automatic image optimization
 - Lazy loading by default
 - Responsive images
@@ -58,21 +59,21 @@ Benefits:
 Prevent unnecessary re-renders with React hooks:
 
 ```javascript
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react'
 
 function ExpensiveComponent({ data, onUpdate }) {
   const processedData = useMemo(() => {
-    return data.map(item => ({
+    return data.map((item) => ({
       ...item,
-      processed: complexCalculation(item)
-    }));
-  }, [data]);
+      processed: complexCalculation(item),
+    }))
+  }, [data])
 
   const handleClick = useCallback(() => {
-    onUpdate(processedData);
-  }, [processedData, onUpdate]);
+    onUpdate(processedData)
+  }, [processedData, onUpdate])
 
-  return <div onClick={handleClick}>{/* ... */}</div>;
+  return <div onClick={handleClick}>{/* ... */}</div>
 }
 ```
 
@@ -83,20 +84,20 @@ For pages with static content, use SSG for optimal performance:
 ```javascript
 // pages/blog/[slug].js
 export async function getStaticPaths() {
-  const posts = await getAllPosts();
-  const paths = posts.map(post => ({
-    params: { slug: post.slug }
-  }));
+  const posts = await getAllPosts()
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+  }))
 
-  return { paths, fallback: false };
+  return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const post = await getPostBySlug(params.slug);
+  const post = await getPostBySlug(params.slug)
   return {
     props: { post },
-    revalidate: 60 // ISR: revalidate every 60 seconds
-  };
+    revalidate: 60, // ISR: revalidate every 60 seconds
+  }
 }
 ```
 
@@ -112,11 +113,11 @@ npm install @next/bundle-analyzer
 // next.config.js
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-});
+})
 
 module.exports = withBundleAnalyzer({
   // your config
-});
+})
 ```
 
 ## Performance Monitoring
@@ -128,7 +129,7 @@ Use Web Vitals to track real user performance:
 export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
     // Send to analytics
-    console.log(metric);
+    console.log(metric)
   }
 }
 ```

@@ -1,0 +1,124 @@
+---
+title: 'Loop Engineering: Designing Autonomous AI Agent Workflows'
+date: '2026-08-10'
+tags: [ai, agents, loop-engineering, automation, software-engineering]
+draft: false
+summary: Loop engineering replaces one-off prompts with self-running systems that find work, execute it, verify results, and repeat — the defining pattern for AI-assisted development in 2026.
+---
+
+The biggest shift in AI-assisted development is not smarter models — it is smarter **systems**. Loop engineering is the practice of designing autonomous workflows where an AI agent iterates toward a goal, checks its own output against external validation, and keeps running without you sitting at the keyboard.
+
+Instead of prompting an agent turn by turn, you build the outer loop that does the prompting for you.
+
+## What Is a Loop?
+
+A loop is a recursive goal: you define a purpose, give the agent tools and constraints, and let it iterate until the work is done — or until an objective check passes.
+
+Every effective loop has five building blocks:
+
+1. **Goal** — A clear, verifiable outcome (not "make it better")
+2. **Context** — Specs, codebase rules, prior decisions, and constraints
+3. **Tools** — File access, shell, tests, linters, APIs
+4. **Verification** — External checks the agent cannot cheat (tests, type checker, CI)
+5. **Automation** — A schedule or trigger so the loop runs without manual intervention
+
+```javascript
+// Conceptual loop structure
+async function engineeringLoop({ goal, verify, maxIterations = 10 }) {
+  let iteration = 0
+
+  while (iteration < maxIterations) {
+    const result = await agent.execute(goal)
+
+    if (await verify(result)) {
+      return { status: 'complete', result }
+    }
+
+    goal = refineGoal(goal, result.feedback)
+    iteration++
+  }
+
+  return { status: 'max_iterations', lastResult: result }
+}
+```
+
+## Why External Verification Matters
+
+The agent that writes the code should not be the only agent that checks it. When the same model evaluates its own output, it tends to confirm rather than challenge.
+
+Strong loops use **independent verification**:
+
+- A passing test suite
+- A clean linter and type checker
+- A separate reviewer agent with no memory of the original change
+- Benchmarks against production-like data
+
+```bash
+# Example verification hook in a CI loop
+npm run test && npm run lint && npm run typecheck
+```
+
+If verification is subjective ("does this look good?"), the loop will drift. If verification is objective ("do all 847 tests pass?"), the loop converges.
+
+## Common Loop Patterns
+
+### Triage Loop
+
+Runs on a schedule. Scans for stale issues, failing CI, or open PRs needing review. Findings land in an inbox; clean runs archive silently.
+
+### Fix Loop
+
+Given a failing test or linter error, the agent attempts a fix, re-runs verification, and repeats until green or max iterations.
+
+### Refactor Loop
+
+A spec defines the target architecture. The agent changes files in batches, verification runs after each batch, and progress is logged outside the model's context window.
+
+### Review Loop
+
+One agent produces a diff. A second agent — different prompt, no shared memory — reviews against a checklist: security, performance, naming, test coverage.
+
+## Building Loops in Practice
+
+Modern agent CLIs support loops through scheduling, hooks, and subagents:
+
+```toml
+# Example subagent definition (.codex/agents/reviewer.toml)
+name = "security-reviewer"
+description = "Reviews code for security vulnerabilities"
+instructions = """
+Review the diff for:
+- SQL injection and XSS
+- Hardcoded secrets
+- Missing input validation
+Return PASS or a numbered list of blockers.
+"""
+model = "strong"
+reasoning_effort = "high"
+```
+
+Pair a fast **explorer** subagent (read-only, scans the codebase) with a strong **executor** subagent (writes changes) and a strict **reviewer** subagent (blocks bad merges).
+
+## The Developer's New Role
+
+Loop engineering does not remove the developer. It changes what you optimize for:
+
+| Before | After |
+| --- | --- |
+| Writing every line of code | Writing specs and verification criteria |
+| Manual code review | Designing review loops and guardrails |
+| Debugging line by line | Debugging the loop when it fails to converge |
+| Knowing every file | Knowing which context the agent needs |
+
+Your job is to make the loop **boring and reliable** — clear goals, hard verification, bounded scope, and human checkpoints for consequential decisions.
+
+## Getting Started
+
+Start small:
+
+1. Pick one repetitive task (daily CI failure summary, dependency audit, test fix)
+2. Write a one-paragraph spec with explicit done criteria
+3. Add a verification command that returns exit code 0 or 1
+4. Schedule it daily and review the triage inbox
+
+Once one loop works reliably, compose them. The future of software engineering is not prompting faster — it is **engineering loops that prompt for you**.

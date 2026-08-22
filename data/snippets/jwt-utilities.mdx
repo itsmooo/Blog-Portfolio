@@ -11,30 +11,22 @@ layout: PostSimple
 ## Generate Tokens
 
 ```js showLineNumbers
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 
 const generateAccessToken = (userId) => {
-  return jwt.sign(
-    { userId },
-    process.env.JWT_SECRET,
-    { expiresIn: '15m' }
-  );
-};
+  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '15m' })
+}
 
 const generateRefreshToken = (userId) => {
-  return jwt.sign(
-    { userId },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: '7d' }
-  );
-};
+  return jwt.sign({ userId }, process.env.JWT_REFRESH_SECRET, { expiresIn: '7d' })
+}
 
 const generateTokens = (userId) => {
   return {
     accessToken: generateAccessToken(userId),
-    refreshToken: generateRefreshToken(userId)
-  };
-};
+    refreshToken: generateRefreshToken(userId),
+  }
+}
 ```
 
 ## Verify Token
@@ -42,33 +34,30 @@ const generateTokens = (userId) => {
 ```js showLineNumbers
 const verifyToken = (token, secret) => {
   try {
-    const decoded = jwt.verify(token, secret);
-    return { valid: true, decoded };
+    const decoded = jwt.verify(token, secret)
+    return { valid: true, decoded }
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
-      return { valid: false, error: 'Token expired' };
+      return { valid: false, error: 'Token expired' }
     }
-    return { valid: false, error: 'Invalid token' };
+    return { valid: false, error: 'Invalid token' }
   }
-};
+}
 ```
 
 ## Refresh Token Handler
 
 ```js showLineNumbers
 const refreshAccessToken = async (refreshToken) => {
-  const { valid, decoded } = verifyToken(
-    refreshToken,
-    process.env.JWT_REFRESH_SECRET
-  );
+  const { valid, decoded } = verifyToken(refreshToken, process.env.JWT_REFRESH_SECRET)
 
   if (!valid) {
-    throw new Error('Invalid refresh token');
+    throw new Error('Invalid refresh token')
   }
 
   // Optionally verify token is in database/blacklist
-  const newAccessToken = generateAccessToken(decoded.userId);
-  
-  return newAccessToken;
-};
+  const newAccessToken = generateAccessToken(decoded.userId)
+
+  return newAccessToken
+}
 ```

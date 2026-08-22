@@ -72,29 +72,35 @@ CREATE TABLE posts (
 ## Key Differences
 
 ### Data Model
+
 - **MongoDB**: Document-based, flexible schema
 - **PostgreSQL**: Table-based, structured schema
 
 ### Query Language
+
 - **MongoDB**: MongoDB Query Language (JavaScript-like)
 - **PostgreSQL**: SQL (standardized)
 
 ### Scalability
+
 - **MongoDB**: Horizontal scaling (sharding)
 - **PostgreSQL**: Vertical scaling (hardware upgrade)
 
 ### Relationships
+
 - **MongoDB**: Embedded documents or references
 - **PostgreSQL**: Foreign keys and joins
 
 ## Performance Considerations
 
 **MongoDB excels at:**
+
 - Read-heavy workloads
 - Large document storage
 - Simple queries on document structure
 
 **PostgreSQL excels at:**
+
 - Complex joins and aggregations
 - Transaction-heavy applications
 - Analytical queries
@@ -102,12 +108,14 @@ CREATE TABLE posts (
 ## Real-World Example
 
 For an e-commerce platform:
+
 - **PostgreSQL** for: Orders, payments, inventory (transactional, relational)
 - **MongoDB** for: Product catalogs, user sessions, logs (flexible, scalable)
 
 ## Hybrid Approach
 
 Many applications use both:
+
 - PostgreSQL for transactional, relational data
 - MongoDB for content, analytics, or logs
 

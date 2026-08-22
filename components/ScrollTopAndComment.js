@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { ClapButton } from '@lyket/react'
 import ScrollTop from '@/components/ScrollTop'
+import siteMetadata from '@/data/siteMetadata'
 
 const ScrollTopAndComment = () => {
   const [show, setShow] = useState(false)
+  const lyketEnabled = Boolean(siteMetadata.lyket?.publicKey)
 
   useEffect(() => {
     const handleWindowScroll = () => {
@@ -18,11 +20,13 @@ const ScrollTopAndComment = () => {
   return (
     <>
       <div
-        className={`fixed right-8 bottom-9 hidden flex-col gap-6 ${show ? 'md:flex' : 'md:hidden'}`}
+        className={`fixed bottom-9 right-8 hidden flex-col gap-6 ${show ? 'md:flex' : 'md:hidden'}`}
       >
-        <button className="mb-16">
-          <ClapButton id="diy-fish-holder" namespace="post" hideCounterIfLessThan={1} />
-        </button>
+        {lyketEnabled && (
+          <button className="mb-16">
+            <ClapButton id="diy-fish-holder" namespace="post" hideCounterIfLessThan={1} />
+          </button>
+        )}
       </div>
       <ScrollTop />
     </>
