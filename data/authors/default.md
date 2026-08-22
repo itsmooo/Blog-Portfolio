@@ -1,20 +1,20 @@
 ---
 name: Mohamed Adan
 avatar: /static/images/avatar.png
-occupation: Full-Stack Developer
-company:
+occupation: Software Engineer
+company: JTech (Jamhuriya Technology Solutions)
 email:
 twitter:
 linkedin:
 github: https://github.com/itsmooo
-text1: I am Mohamed, a Full-Stack Developer with experience building modern, scalable, and user-focused web applications. I work across both frontend and backend technologies, transforming ideas into reliable digital products. I focus on clean code, performance, security, and maintainable system design.
+text1: I am Mohamed, a Software Engineer with experience building modern web and mobile applications, AI systems, and machine learning solutions. I work across frontend, backend, and mobile technologies — transforming ideas into reliable digital products. I focus on clean code, performance, security, and maintainable system design.
 text2:
 text3:
 ---
 
 ## About Me
 
-I am Mohamed, a Full-Stack Developer with experience building modern, scalable, and user-focused web applications. I work across both frontend and backend technologies, transforming ideas into reliable digital products. I focus on clean code, performance, security, and maintainable system design.
+I am Mohamed, a Software Engineer with experience building modern web and mobile applications, AI systems, and machine learning solutions. I work across frontend, backend, and mobile technologies — transforming ideas into reliable digital products. I focus on clean code, performance, security, and maintainable system design.
 
 ## Technical Skills
 
@@ -25,12 +25,26 @@ I am Mohamed, a Full-Stack Developer with experience building modern, scalable, 
 - Tailwind CSS, Material UI (MUI)
 - Responsive & accessible UI design
 
+### Mobile Development
+
+- React Native / cross-platform mobile apps
+- Native Android & iOS development
+- Mobile UI/UX and performance optimization
+- API integration and offline-first patterns
+
 ### Backend Development
 
 - Node.js (Express.js, NestJS)
 - RESTful API development
 - Authentication & authorization (JWT)
 - Server-side architecture & validation
+
+### AI & Machine Learning
+
+- Machine Learning model development and training
+- Deep Learning (NLP, speech-to-text, computer vision)
+- AI integration into web and mobile applications
+- Data preprocessing, model evaluation, and deployment
 
 ### Databases
 
@@ -48,6 +62,8 @@ I am Mohamed, a Full-Stack Developer with experience building modern, scalable, 
 ## What I Do
 
 - Design and develop full-stack web applications
+- Build cross-platform and native mobile applications
+- Develop AI and machine learning solutions for real-world problems
 - Build secure APIs and backend services
 - Create fast, responsive user interfaces
 - Integrate third-party services (payments, APIs, dashboards)
@@ -78,5 +94,5 @@ Real-time data visualization and analytics dashboards.
 ## Contact
 
 **Name:** Mohamed Adan  
-**Role:** Full-Stack Developer  
+**Role:** Software Engineer at JTech  
 **GitHub:** [https://github.com/itsmooo](https://github.com/itsmooo)

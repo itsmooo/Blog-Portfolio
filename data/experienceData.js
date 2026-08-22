@@ -32,11 +32,11 @@ const experienceData = [
     range: '2024 - Present',
     url: 'https://jtech.so/',
     text1:
-      'Develop and maintain web applications and custom software solutions for clients across education, healthcare, and business sectors.',
+      'Develop and maintain web and mobile applications, AI-powered features, and custom software solutions for clients across education, healthcare, and business sectors.',
     text2:
-      'Build responsive frontend interfaces and scalable backend services using modern JavaScript frameworks and RESTful APIs.',
+      'Build responsive web interfaces, cross-platform mobile apps, and scalable backend services using modern JavaScript frameworks and RESTful APIs.',
     text3:
-      'Collaborate with designers and product teams to deliver secure, high-performance applications that meet client requirements.',
+      'Design and integrate machine learning models — including NLP and speech-to-text systems — into production applications.',
   },
 ]
 

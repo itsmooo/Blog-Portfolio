@@ -213,41 +213,25 @@ export default function Now(currentlyReading) {
         {/* Work */}
         <div className="pb-4">
           <p>
-            I work as a Data Engineer at{' '}
+            I work as a Software Engineer at{' '}
             <Link
-              href={'https://www.accenture.com/'}
+              href={'https://jtech.so/'}
               className="special-underline no-underline dark:text-gray-100 hover:dark:text-gray-100"
             >
-              Accenture
+              JTech (Jamhuriya Technology Solutions)
             </Link>
             .
           </p>
           <br />
           <p>
-            I work on building pipelines and automating the entire process using Scala and Gcloud.
+            I build web and mobile applications, AI-powered features, and machine learning
+            solutions — working across the full stack to deliver secure, scalable products for
+            clients.
           </p>
           <br />
           <p>
-            I have been trying to shift my field from Data Engineering to Data Science. I have been
-            constantly applying for the same as well.
-          </p>
-          <br />
-          <p>
-            My location preference is Bangalore but I am open to shift to another place for a better
-            opportunity.
-          </p>
-          <br />
-          <p>
-            I'm always trying to learn more, and at the moment I'm trying to follow this{' '}
-            <Link
-              href={
-                'https://www.youtube.com/watch?v=_u-PaJCpwiU&list=PLu0W_9lII9ai6fAMHp-acBmJONT7Y4BSG'
-              }
-              className="special-underline no-underline dark:text-gray-100 hover:dark:text-gray-100"
-            >
-              Machine Learning tutorial
-            </Link>
-            .
+            My day-to-day work spans React and Next.js for web, mobile app development, and
+            integrating AI/ML models into production systems.
           </p>
         </div>
         <div className="justify-center text-center text-2xl font-medium text-gray-200 dark:text-gray-600">

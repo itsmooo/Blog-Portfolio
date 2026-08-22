@@ -1,8 +1,8 @@
 const siteMetadata = {
-  title: 'Mohamed Adan | Full-Stack Developer',
+  title: 'Mohamed Adan | Software Engineer',
   author: 'Mohamed Adan',
   headerTitle: 'Mohamed Adan',
-  description: 'Full-Stack Developer building modern, scalable web applications',
+  description: 'Software Engineer building web, mobile, and AI-powered applications',
   snippets: 'Reuseable code snippets collected by Mohamed',
   language: 'en-us',
   theme: 'system', // system, dark or light
