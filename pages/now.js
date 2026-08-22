@@ -23,7 +23,7 @@ import {
 
 export const getServerSideProps = async () => {
   const response = await fetch(
-    'https://api.openweathermap.org/data/2.5/weather?lat=23.014770&lon=72.526330&appid=1b3c10c18e894eaf1fd63eedde53fa54&units=metric'
+    'https://api.openweathermap.org/data/2.5/weather?lat=2.0469&lon=45.3182&appid=1b3c10c18e894eaf1fd63eedde53fa54&units=metric'
   )
   const data = await response.json()
 
@@ -62,66 +62,15 @@ export default function Now(currentlyReading) {
     _50n: <BsCloudFogFill className="mb-0.5 inline h-3 w-3 hover:animate-spin" />,
   }
 
-  var year = new Date().getFullYear()
-  var month = new Date().getMonth()
-  var date = new Date().getDate()
-  var hour = new Date().getHours()
-  var minute = new Date().getMinutes()
-  var second = new Date().getSeconds()
   const now = () => dayjs().tz()
-  const format = 'hhA'
-  const [TodayDate, setDate] = useState(now())
+  const [todayDate, setDate] = useState(now())
 
   useEffect(() => {
     const timer = setInterval(() => setDate(now()), 1000)
     return () => clearInterval(timer)
   }, [])
 
-  var ParthBirthDate = '2000-04-16'
-  var birthDate = new Date(ParthBirthDate)
-
-  var ParthAge = year - birthDate.getFullYear()
-
-  var ParthMonth = 0
-  if (month >= birthDate.getMonth()) ParthMonth = month - birthDate.getMonth()
-  else {
-    ParthAge--
-    ParthMonth = 12 + month - birthDate.getMonth()
-  }
-
-  var ParthDay = 0
-  if (date >= birthDate.getDate()) ParthDay = date - birthDate.getDate()
-  else {
-    ParthMonth--
-    ParthDay = 31 + date - birthDate.getDate()
-    if (ParthMonth < 0) {
-      ParthMonth = 11
-      ParthAge--
-    }
-  }
-
-  var age = {}
-  age = {
-    years: ParthAge,
-    months: ParthMonth,
-    days: ParthDay,
-  }
-
-  var ageString = ''
-  if (age.years > 0 && age.months > 0 && age.days > 0)
-    ageString = age.years + ' years, ' + age.months + ' months, and ' + age.days + ' days old'
-  else if (age.years == 0 && age.months == 0 && age.days > 0)
-    ageString = 'Only ' + age.days + ' days old'
-  else if (age.years > 0 && age.months == 0 && age.days == 0)
-    ageString = age.years + ' years old. Happy Birthday!!'
-  else if (age.years > 0 && age.months > 0 && age.days == 0)
-    ageString = age.years + ' years and ' + age.months + ' months old'
-  else if (age.years == 0 && age.months > 0 && age.days > 0)
-    ageString = age.months + ' months and ' + age.days + ' days old'
-  else if (age.years > 0 && age.months == 0 && age.days > 0)
-    ageString = age.years + ' years, and' + age.days + ' days old'
-  else if (age.years == 0 && age.months > 0 && age.days == 0) ageString = age.months + ' months old'
-  else ageString = "Welcome to Earth! <br> It's first day on Earth!"
+  const updatedAt = todayDate.format('DD-MM-YYYY HH:mm:ss')
 
   return (
     <>
@@ -134,19 +83,20 @@ export default function Now(currentlyReading) {
         <div className="my-2">
           <h3>Where am I and what am I doing?</h3>
           <div className=" mb-6 mt-4 text-xs text-neutral-700 dark:text-neutral-400">
-            This page was automatically updated @ {date}-{month}-{year} {hour}:{minute}:{second}
+            This page was automatically updated @ {updatedAt} (EAT, Mogadishu)
           </div>
         </div>
         {/* Misc */}
         <div>
           <div className="flex justify-between gap-5">
             <div className="mb-10 mt-2 w-1/2 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
-              <span className="ml-2 font-semibold">Location:</span> <span>Ahmedabad, India</span>
+              <span className="ml-2 font-semibold">Location:</span>{' '}
+              <span>Mogadishu, Somalia</span>
               <br />
               <span className="ml-2 font-semibold">Weather:</span>{' '}
               <span>
                 <a
-                  href="https://weather.com/en-GB/weather/today/l/f42d9f8baa19b4d8d5e034449faa703839993366f64551a56a2b530297075dc2"
+                  href="https://weather.com/weather/today/l/Mogadishu+Somalia"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline-offset-1 hover:underline"
@@ -159,30 +109,35 @@ export default function Now(currentlyReading) {
             </div>
 
             <div className="mb-10 mt-2 w-1/2 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
-              <span className="ml-2 font-semibold">Reading:</span>{' '}
-              <a
-                href={currentlyReadingData[0].url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline-offset-1 hover:underline"
-              >
-                <span>{currentlyReadingData[0].title}</span> by{' '}
-                <span>{currentlyReadingData[0].author}</span>
-              </a>
-              <br />
-              <span className="ml-2 font-semibold">Age:</span> <span>{ageString}</span>
+              {currentlyReadingData?.[0] ? (
+                <>
+                  <span className="ml-2 font-semibold">Reading:</span>{' '}
+                  <a
+                    href={currentlyReadingData[0].url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline-offset-1 hover:underline"
+                  >
+                    <span>{currentlyReadingData[0].title}</span> by{' '}
+                    <span>{currentlyReadingData[0].author}</span>
+                  </a>
+                  <br />
+                </>
+              ) : null}
+              <span className="ml-2 font-semibold">Role:</span>{' '}
+              <span>Software Engineer @ JTech</span>
             </div>
           </div>
 
           <div className="-my-6 flex justify-between gap-5">
             <div className="mb-10 mt-2 w-1/2 rounded-md border border-gray-600 p-1 text-sm dark:border-gray-200">
               <span className="ml-2 font-semibold">Date:</span>{' '}
-              <span>{TodayDate.format('DD/MM/YYYY')}</span>
+              <span>{todayDate.format('DD/MM/YYYY')}</span>
               <br />
               <span className="ml-2 font-semibold">Time:</span>{' '}
               <span>
                 <BsClock className="mb-0.5 inline h-3 w-3 hover:animate-spin" />{' '}
-                {TodayDate.format('h:mm:ss A')}
+                {todayDate.format('h:mm:ss A')}
               </span>
             </div>
 
@@ -203,7 +158,7 @@ export default function Now(currentlyReading) {
                 )}
               </span>
               <br />
-              <span className="ml-2 font-semibold">Drinking:</span> <span>Coffee</span>
+              <span className="ml-2 font-semibold">Drinking:</span> <span>Shaah (Somali tea)</span>
             </div>
           </div>
         </div>
@@ -219,14 +174,14 @@ export default function Now(currentlyReading) {
               className="special-underline no-underline dark:text-gray-100 hover:dark:text-gray-100"
             >
               JTech (Jamhuriya Technology Solutions)
-            </Link>
-            .
+            </Link>{' '}
+            in Mogadishu, Somalia.
           </p>
           <br />
           <p>
             I build web and mobile applications, AI-powered features, and machine learning
             solutions — working across the full stack to deliver secure, scalable products for
-            clients.
+            clients in Somalia and beyond.
           </p>
           <br />
           <p>
@@ -241,26 +196,26 @@ export default function Now(currentlyReading) {
         {/* Personal life */}
         <div className="pt-6">
           <p>
-            I've been slowly building this website, trying to share interesting things with anyone
-            who wants to read it.{' '}
+            I am based in Mogadishu, building this blog to share what I learn about software
+            engineering, AI, and mobile development.{' '}
             <Link
               href={'https://www.swyx.io/learn-in-public'}
               className="special-underline no-underline dark:text-gray-100 hover:dark:text-gray-100"
             >
-              This
+              Learning in public
             </Link>{' '}
-            article is a great reason to start your blog.
+            helps me grow and connect with other developers.
           </p>
           <br />
           <p>
-            I am also going to start applying for Masters in Data Science in August 2022 for intake
-            of Fall 2023. I hope to get a good university near the West Coast. I'll update this page
-            after I get my admits.
+            Outside of work, I enjoy exploring new AI tools, contributing to side projects, and
+            staying up to date with trends in agentic AI and modern software engineering.
           </p>
           <br />
           <p>
-            I recently started to draft a post about my new Obsidian worklfow, it will be a good
-            one!
+            I recently graduated with a Bachelor of Computer Science from Jamhuriya University of
+            Science and Technology, and I am focused on growing as an engineer while building
+            meaningful products at JTech.
           </p>
         </div>
         <div className="mt-3 text-sm">
