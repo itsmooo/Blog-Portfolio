@@ -237,3 +237,30 @@ input:-webkit-autofill:focus {
   transform: translateY(-2px);
   transition: transform 34ms;
 }
+
+/* GitHub activity calendar — full width, no card background */
+.github-activity-wrapper article {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.github-activity-wrapper svg {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+  height: auto;
+}
+
+.github-activity-wrapper footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  color: rgb(107 114 128);
+}
+
+.dark .github-activity-wrapper footer {
+  color: rgb(156 163 175);
+}

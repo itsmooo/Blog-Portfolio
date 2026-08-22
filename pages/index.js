@@ -7,6 +7,10 @@ import formatDate from '@/lib/utils/formatDate'
 import { RoughNotation } from 'react-rough-notation'
 import NewsletterForm from '@/components/NewsletterForm'
 import ViewCounter from '@/components/ViewCounter'
+import GithubActivity from '@/components/GithubActivity'
+import HealthWhoop from '@/components/HealthWhoop'
+import useSWR from 'swr'
+import fetcher from 'lib/fetcher'
 
 const MAX_DISPLAY = 3
 
@@ -17,6 +21,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }) {
+  const { data: whoopData } = useSWR('/api/whoop', fetcher)
+
   return (
     <>
       <PageSEO title={siteMetadata.title} description={siteMetadata.description} />
@@ -198,6 +204,10 @@ export default function Home({ posts }) {
               </div>
             </div>
           </div>
+        </div>
+        <div className="mb-16 flex w-full flex-col gap-12">
+          <HealthWhoop data={whoopData} />
+          <GithubActivity />
         </div>
         <h2 className="flex pb-6 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-3xl md:text-5xl">
           Recent Posts

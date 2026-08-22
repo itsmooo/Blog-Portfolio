@@ -6,11 +6,11 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app;
-  style-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.jsdelivr.net;
   img-src * blob: data:;
   media-src 'none';
   connect-src *;
-  font-src 'self';
+  font-src 'self' fonts.gstatic.com cdn.jsdelivr.net;
   frame-src giscus.app
 `
 
@@ -82,6 +82,11 @@ module.exports = withBundleAnalyzer({
     dirs: ['pages', 'components', 'lib', 'layouts', 'scripts'],
   },
   async headers() {
+    // Skip strict CSP in development — it breaks hot reload and external assets
+    if (process.env.NODE_ENV === 'development') {
+      return []
+    }
+
     return [
       {
         source: '/(.*)',

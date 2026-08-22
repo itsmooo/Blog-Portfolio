@@ -13,6 +13,7 @@ const siteMetadata = {
   socialBanner: '/static/images/twitter-card.png',
   email: '',
   github: 'https://github.com/itsmooo',
+  githubUsername: 'itsmooo',
   twitter: '',
   linkedin: '',
   website: '',

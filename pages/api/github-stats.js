@@ -1,11 +1,10 @@
-export const config = {
-  runtime: 'experimental-edge',
-}
+import siteMetadata from '@/data/siteMetadata'
 
 export default async function handler(req, res) {
-  const userResponse = await fetch('https://api.github.com/users/pycoder2000')
+  const username = siteMetadata.githubUsername || 'itsmooo'
+  const userResponse = await fetch(`https://api.github.com/users/${username}`)
   const userReposResponse = await fetch(
-    'https://api.github.com/users/pycoder2000/repos?per_page=100'
+    `https://api.github.com/users/${username}/repos?per_page=100`
   )
 
   const user = await userResponse.json()

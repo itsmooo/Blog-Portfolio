@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import siteMetadata from '@/data/siteMetadata'
 import fetcher from 'lib/fetcher'
 import MetricCard from 'components/metrics/Card'
 
@@ -7,7 +8,7 @@ export default function GithubCard() {
 
   const stars = new Number(data?.stars)
   const followers = new Number(data?.followers)
-  const link = 'https://github.com/pycoder2000'
+  const link = siteMetadata.github
 
   return (
     <div className="my-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2">
