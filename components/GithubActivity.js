@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
+import useSWR from 'swr'
 import { useTheme } from 'next-themes'
 import siteMetadata from '@/data/siteMetadata'
+import fetcher from 'lib/fetcher'
 
 const GitHubCalendar = dynamic(() => import('react-github-calendar'), { ssr: false })
 
@@ -18,6 +20,7 @@ export default function GithubActivity() {
   const username = siteMetadata.githubUsername || 'itsmooo'
   const containerRef = useRef(null)
   const [blockSize, setBlockSize] = useState(12)
+  const { data } = useSWR('/api/github-contributions', fetcher)
 
   useEffect(() => {
     const container = containerRef.current
@@ -42,6 +45,14 @@ export default function GithubActivity() {
       <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         Activity
       </h2>
+      {data?.total > 0 ? (
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+          <span className="font-bold text-gray-900 dark:text-gray-100">
+            {data.total.toLocaleString()}
+          </span>{' '}
+          contributions in the last year
+        </p>
+      ) : null}
       <div ref={containerRef} className="mt-4 w-full">
         <GitHubCalendar
           username={username}

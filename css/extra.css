@@ -255,10 +255,14 @@ input:-webkit-autofill:focus {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 0.5rem;
   margin-top: 0.75rem;
   color: rgb(107 114 128);
+}
+
+.github-activity-wrapper footer > :first-child {
+  display: none;
 }
 
 .dark .github-activity-wrapper footer {
